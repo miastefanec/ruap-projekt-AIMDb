@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename = 'styles/style.css') }}">
+        <script src="//d3js.org/d3.v3.min.js"></script>
+    </head>
+
+    <body>
+        <h1><span id="AI">AI</span>MDb</h1>
+        <h2>The machine learning assisted movie review website</h2>
+
+        <a href="{{ url_for('index') }}">Submit a review</a>
+
+        <form id="filterForm" action="" method="POST">
+            <div id="firstRow">
+                <input type="checkbox" id="showAll" name="showAll" value="All" checked>
+                <label for="showAll">Display all reviews</label>
+            </div>
+            <div id="secondRow">
+                <label for="filter">Filter reviews by </label>
+                <select name="filter" id="filter" disabled>
+                    <option value="author">Author</option>
+                    <option value="movie">Movie</option>
+                </select>
+                <input type="text" name="term" id="term" required placeholder="Enter filter term" disabled>
+                <label id="sortLabel" for="sort">Sort results by </label>
+                <select name="sort" id="sort">
+                    <option value="name">Author</option>
+                    <option value="movie">Movie</option>
+                    <option value="sentiment">Sentiment</option>
+                    <option value="probability">Prediction certainty</option>
+                </select>
+            </div>
+            <input id="filterSubmit" type="submit" value="Search">
+        </form>
+
+        <section id="reviews">
+            {% for review in review_data %}
+                {% if review.sentiment=="positive" %}
+                <div class="review posReview">
+                {% else %}
+                <div class="review negReview">
+                {% endif %}
+                    <div class="user">
+                        <img src="{{ url_for('static', filename = 'images/user.png') }}">
+                        <p>{{review.name}}</p>
+                    </div>
+                    <div class="movie">
+                        <img src="{{ url_for('static', filename = 'images/movie.png') }}">
+                        <p>{{review.movie}}</p>
+                    </div>
+                    <div class="movieReview">
+                        <img src="{{ url_for('static', filename = 'images/review.png') }}">
+                        <p>{{review.review}}</p>
+                    </div>
+                    <div class="sentiment">
+                        <img src="{{ url_for('static', filename = 'images/ml.png') }}">
+                        <p>Predicted {{review.sentiment}} with {{review.probability}} certainty</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </section>
+
+        {%if not review_data[0] %}
+        <p id="error">Sorry, no reviews found</p>
+        {% endif %}
+    </body>
+    <script src="{{ url_for('static', filename = 'scripts/script.js') }}"></script>
+    
+    {% if review_data[0] %}
+    <script>
+        var positive = '{{positive}}'
+        var negative = '{{negative}}'
+        
+        var winLossData = [{"category": "positive", "value": positive}, {"category": "negative", "value": negative}];
+        
+        var height = 250, width = 250;
+
+        var pieChart = d3.select("#filterForm")
+            .append('svg')
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+            .attr("transform", "translate(" + (width/2) + "," + (height/2) + ")");
+
+        var radius = Math.min(width, height) / 2;
+
+        var color = d3.scale.ordinal()
+            .range(["chartreuse", "red"]);
+
+        var arc = d3.svg.arc()
+            .outerRadius(radius)
+            .innerRadius(radius - 20);
+
+        var pie = d3.layout.pie()
+            .sort(null)
+            .startAngle(0)
+            .endAngle(2*Math.PI)
+            .value(function(d) { return d.value; });
+
+        var g = pieChart.selectAll(".arc")
+            .data(pie(winLossData))
+            .enter().append("g")
+            .attr("class", "arc");
+
+        g.append("path")
+            .attr("fill", function(d, i) { return color(i); })
+            .transition().delay(function(d, i) { return i * 500; }).duration(500)
+            .attrTween('d', function(d) {
+                var i = d3.interpolate(d.startAngle+0.1, d.endAngle);
+                return function(t) {
+                    d.endAngle = i(t);
+                    return arc(d);
+                }
+            });
+
+        var pieChartText = g.append("text")
+            .attr("y", "-40");
+
+        var negText = (negative % 10 == 1) ? " negative review" : " negative reviews"
+        var posText = (positive % 10 == 1) ? " positive review" : " positive reviews"
+        
+        pieChartText.append("tspan")
+            .attr("class", "pieText")
+            .style("fill", "chartreuse")
+            .text(positive + posText)
+            .attr("x", "0")
+            .attr("dy", "1.2em")
+            .attr("font-size", "1.5em")
+            .attr("text-anchor", "middle");
+            
+        pieChartText.append("tspan")
+            .attr("class", "pieText")
+            .style("fill", "red")
+            .text(negative + negText)
+            .attr("x", "0")
+            .attr("dy", "1.2em")
+            .attr("font-size", "1.5em")
+            .attr("text-anchor", "middle");
+    </script>
+    {% endif %}
+</html>

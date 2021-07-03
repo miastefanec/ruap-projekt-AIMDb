@@ -1,0 +1,262 @@
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300&display=swap');
+
+* {
+  box-sizing: border-box;
+  font-family: 'Titillium Web', sans-serif;;
+}
+
+h1{
+  text-align: center;
+  font-size: 3.5em;
+  margin-bottom: 0px;
+  padding-bottom: 0;
+}
+h2{
+  text-align: center;
+  font-size: 1.5em;
+  margin-top: 0px;
+  padding-top: 0;
+}
+
+span{
+  color:navy;
+}
+
+body{
+    background-image: linear-gradient( rgba(245, 246, 252, 0.52), rgba(117, 19, 93, 0.73)),url(../images/background.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+a{
+    font-size: 2em;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: black;
+    margin-top: 20px;
+}
+
+a:hover{
+    color: rgba(255,255,255,0.8);
+}
+
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+  background-color: rgba(245, 245, 245,0.8);
+}
+
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+  font-weight: bold;
+}
+
+input[type=submit] {
+  background-color: rgba(245, 245, 245,0.8);
+  color: #000000;
+  padding: 12px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 45%;
+  width: 10%;
+  margin-top:2%;
+}
+
+input[type=submit]:hover {
+  background-color: rgba(245, 245, 245,0.6);
+}
+
+.container {
+  margin-top: 50px;
+  border-radius: 5px;
+  background-color:rgba(54, 118, 202, 0.75);
+  padding: 20px;
+  width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  height: auto;
+  box-shadow: 0px 4px 12px rgba(255, 255, 255, 0.2);
+}
+
+.col-25 {
+  float: left;
+  width: 10%;
+  margin-top: 6px;
+}
+
+.col-75 {
+  float: left;
+  width: 90%;
+  margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+/* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 700px) {
+  .col-25, .col-75, input[type=submit],.container {
+    width: 100%;
+    margin-top: 0;
+    margin-left: 0;
+  }
+
+  input[type=submit]{
+    margin-top: 10px;
+  }
+
+  .positive, .negative{
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 700px) {
+    .col-25{
+        padding-left: 0;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .container{
+        margin-top: 100px;
+    }
+}
+
+.positive, .negative{
+  margin-left: auto;
+  margin-right: auto;
+  width: 700px;
+  font-size: 20px;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+.positive, .posReview{
+  background-color: rgb(34, 139, 34);
+}
+
+.negative, .negReview{
+  background-color: rgb(178, 34, 34);
+}
+
+@media screen and (max-width: 700px) {
+  .positive, .negative{
+    width: 100%;
+  }
+}
+
+#reviews{
+  margin-top: 25px;
+}
+
+#reviews img{
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.user, .movie, .sentiment, .movieReview{
+  display: flex;
+  align-items: center;
+}
+
+.review{
+  font-size: 20px;
+  width: 80%;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 15px auto;
+}
+
+.review p{
+  margin: 5px;
+}
+
+#firstRow, #secondRow{
+  display: flex;
+  align-items: center;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#firstRow{
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+#secondRow label{
+  width: 450px;
+}
+
+#filterForm{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+}
+
+#sortLabel{
+  width: 350px;
+  padding-right: 0;
+  margin-right: 0;
+  margin-left: 20px;
+}
+
+#filter, #term{
+  margin-right: 30px;
+}
+
+#filterSubmit{
+  width: 150px;
+  margin: 0;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+@media screen and (max-width: 700px) {
+  #secondRow{
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #secondRow label{
+    width: 100%;
+    text-align: center;
+  }
+  
+  #filter{
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+
+  #term{
+    margin-right: 0;
+  }
+
+  #firstRow{
+    margin-bottom: 0px;
+  }
+}
+
+#error{
+  width: 100%;
+  text-align: center;
+  font-size: 2em;
+}

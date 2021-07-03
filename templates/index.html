@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename = 'styles/style.css') }}">
+    </head>
+
+    <body>
+
+        <h1><span id="AI">AI</span>MDb</h1>
+        <h2>The machine learning assisted movie review website</h2>
+
+        <div class="container">
+        
+            <form action="" method="POST">
+                <div class="row">
+                
+                    <div class="col-25">
+                    
+                        <label for="Name">Name</label>
+                
+                    </div>
+                    
+                    <div class="col-75">
+                    
+                        <input type="text" id="name" name="name" placeholder="Your name" required>
+                    
+                    </div>
+                </div>
+                
+                <div class="row">
+                
+                    <div class="col-25">
+                    
+                        <label for="movie">Movie</label>
+                
+                    </div>
+                
+                    <div class="col-75">
+                    
+                        <input type="text" id="movie" name="movie" placeholder="Enter the name of the movie" required>
+                
+                    </div>
+                </div>
+                
+                <div class="row">
+                
+                    <div class="col-25">
+                    
+                        <label for="review">Review</label>
+                
+                    </div>
+                
+                    <div class="col-75">
+                    
+                        <textarea id="review" name="review" placeholder="Write your review" style="height:200px" required></textarea>
+                
+                    </div>
+                
+                </div>
+                
+                <div class="row">
+                
+                    <input id="submit" type="submit" value="Submit">
+                
+                </div>
+            
+            </form>
+        </div>
+        {% if sentiment %}
+            {% if sentiment=="positive" %}
+                <div class="positive">The model is {{probability}} certain that your review was positive!</div>
+            {% else %}
+                <div class="negative">The model is {{probability}} certain that your review was negative!</div>
+            {% endif %}
+        {% endif %}
+
+        <a href="{{ url_for('reviews') }}">See all reviews</a>
+    </body>
+</html>
